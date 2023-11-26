@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Story Site</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myproject/styles.css' %}">
+</head>
+<body>
+    {% block header %}
+    <header>
+        <!-- Titulo que va a aparecer en la main-->
+        <h1>write with me</h1>
+        <nav class="nav">|
+            <!-- Menú que chequea, si el usuario está o no authentificado, usando una propiedad de django, si está logeado le muestra profile y cerrar sesión, sion, login y sign up -->
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Logout</a> |
+            <a href="{% url 'profile' %}">Profile</a> |
+        {% else %}
+            <a href="{% url 'login' %}">Login</a> |
+            <a href="{% url 'signup' %}">Sign up</a> |
+        {% endif %}
+        <!-- Resto del nav no varía si el usuario está o no logeado-->
+            <a href="{% url 'about' %}">About Me</a> |
+            <a href="{% url 'create_story' %}">Create a New Story</a> |
+            <a href="{% url 'browse_stories' %}">Join a New Story</a> |
+            <a href="{% url 'read_stories' %}">Read Stories</a> |
+            <a href="{% url 'home' %}">Home</a> |       
+        </nav>
+    </header>
+    {% endblock %}
+    <main>
+        <!-- Esto lo estaba usando para avisarle al usuario si había algo pasando por ejemplo, Ups no estás logeado, estaba teniendo problemas con el views, lo dejo para terminar en algún otro momento, si no hay mensajes no cambia nada  -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p style="text-align: center; margin-bottom: 5vh;">&copy; 2023 Write With Me. Entrega Final Coderhouse  |<a href="https://www.linkedin.com/in/agust%C3%ADn-garagorry-786555116/">Agustin Garagorry Linkedin</a>|<a href="#">abgagu@utu.fi</a></p>
+    </footer>
+</body>
+</html>

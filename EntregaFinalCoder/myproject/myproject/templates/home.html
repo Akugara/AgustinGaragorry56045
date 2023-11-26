@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<header class="home-header">
+    <h1>write with me</h1>
+    <!-- En este caso necesitaba que el home fuera más atractivo con el menu en el medio de la pantalla
+    opté por darle un id a cada item para personalizarlos en el home -->
+    <nav class="nav">|
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" id="Logout">Logout</a> |
+        <a href="{% url 'profile' %}" id="Profile">Profile</a> |
+    {% else %}
+        <a href="{% url 'login' %}" id="Login">Login</a> |
+        <a href="{% url 'signup' %}" id="Sign">Sign up</a> |
+    {% endif %}
+        <a href="{% url 'about' %}" id="About">About Me</a> |
+        <a href="{% url 'create_story' %}" id="Create">Create a New Story</a> |
+        <a href="{% url 'browse_stories' %}" id="Join">Join a New Story</a> |
+        <a href="{% url 'read_stories' %}" id="Read">Read Stories</a> |
+        <a href="{% url 'home' %}" id="Home">Home</a> |       
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<p class="mainpagep">create our own story</p>
+{% endblock %}

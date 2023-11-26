@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ story.title }}</h2>
+
+<!-- Display the original story text -->
+<div class="original-story">
+    <h3>Original Story:</h3>
+    <p>{{ story.body|linebreaksbr }}</p>
+</div>
+
+<!-- Display the contributions to the story -->
+{% for contribution in story.contribution_set.all %}
+    <p class="{% if contribution.user != story.user %}other-user{% endif %}">
+        {{ contribution.text|linebreaksbr }}
+    </p>
+{% endfor %}
+
+<!-- Form to add to the story -->
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Contribute</button>
+</form>
+
+{% endblock %}

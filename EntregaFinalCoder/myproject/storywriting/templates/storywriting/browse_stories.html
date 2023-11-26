@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Browse Stories</h1>
+<!-- Buscador de historias usando querrys-->
+<form method="GET">
+    <input type="text" name="q" placeholder="Search for a story/author/gendre...">
+    <button type="submit">Search</button> 
+</form>
+<!-- Despliego de historias, en este caso no llamo las imágenes porque es una versión simplificada del reading -->
+{% for story in stories %}
+    <div>
+        <h2>{{ story.title }}</h2>
+        <p>By {{ story.user.username }}</p>
+        <p>Genre: {{ story.genre }}</p>
+        <p>Posted on {{ story.created_at }}</p>
+        <p>{{ story.body }}</p>
+        <a href="{% url 'join_story' story.id %}">Join this story</a>
+        <hr style="border-top: solid #ffffff; margin-top: 20px;">
+    </div>
+{% endfor %}
+
+{% endblock %}

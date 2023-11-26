@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+
+<h2>Take some time to read some cool stories</h2>
+
+{% for story in stories %}
+    <div class="card">
+        <div class="image-container">
+            <img src="{{ story.image.url }}" alt="{{ story.title }}">
+        </div>
+        <div class="text-container">
+            <div class="story-details">
+                
+                <h2 class="title">Title | {{ story.title }}</h2>
+                <p class="author">Author | {{ story.user.username }}</p>
+                <p class="genre">Genre | {{ story.genre }}</p>
+                <p class="date">Date | {{ story.created_at|date:"F d, Y" }}</p>
+
+            </div>
+            <div class="story-excerpt">
+                <p>{{ story.body|linebreaksbr }}</p>
+                {% for contribution in story.contribution_set.all %}
+                    <p class="{% if contribution.user != story.user %}other-user{% endif %}">
+                        {{ contribution.text|linebreaksbr }}
+                    </p>
+                {% endfor %}
+                <hr style="border-top: solid #ffffff; margin-top: 20px;">
+
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}

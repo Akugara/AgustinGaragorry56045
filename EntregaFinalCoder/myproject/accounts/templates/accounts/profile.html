@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+
+<h2>Profile</h2>
+<p>Welcome, {{ user.username }}!</p>
+
+{% for story in stories %}
+    <div class="card">
+        <div class="image-container">
+            <img src="{{ story.image.url }}" alt="{{ story.title }}">
+        </div>
+        <div class="text-container"> 
+
+            <div class="story-details">
+                
+
+                
+                <p class="author">Author | {{ story.user.username }}</p>
+                <p class="title">Title | {{ story.title }}</p>
+                <p class="genre">Genre | {{ story.genre }}</p>
+                <p class="date">Date | {{ story.created_at|date:"F d, Y" }}</p>
+
+            </div>
+            <div class="story-excerpt">
+                <p>{{ story.body }}</p>
+            </div>
+            <button class="story-button edit-button">
+                <a href="{% url 'edit_story' story.id %}">Edit</a>
+            </button>
+            <button class="story-button delete-button">
+                <a href="{% url 'delete_story' story.id %}">Delete</a>
+            </button>
+
+        </div>
+        
+    </div>
+{% endfor %}
+
+{% endblock %}
